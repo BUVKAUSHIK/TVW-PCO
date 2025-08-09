@@ -26,26 +26,26 @@
     --radius: 0.5rem;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    .dark {
+    --background: 148 65% 8%; /* wa-green-950 */
+    --foreground: 145 55% 90%; /* wa-green-100 */
+    --card: 147 50% 12%; /* wa-green-900 */
+    --card-foreground: 145 55% 90%; /* wa-green-100 */
+    --popover: 148 65% 8%; /* wa-green-950 */
+    --popover-foreground: 145 55% 90%; /* wa-green-100 */
+    --primary: 43 96% 64%; /* wa-gold-400 */
+    --primary-foreground: 148 65% 8%; /* wa-green-950 */
+    --secondary: 147 34% 23%; /* wa-green-800 */
+    --secondary-foreground: 43 96% 64%; /* wa-gold-400 */
+    --muted: 147 34% 23%; /* wa-green-800 */
+    --muted-foreground: 146 30% 60%; /* Adjusted for readability */
+    --accent: 147 40% 35%; /* wa-green-700 */
+    --accent-foreground: 43 96% 64%; /* wa-gold-400 */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 147 34% 23%; /* wa-green-800 */
+    --input: 147 34% 23%; /* wa-green-800 */
+    --ring: 43 96% 64%; /* wa-gold-400 */
   }
 }
 
@@ -53,8 +53,8 @@
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-background text-foreground;
+    body {
+    @apply bg-background text-foreground transition-colors duration-300;
   }
 }
 

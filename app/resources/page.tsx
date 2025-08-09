@@ -94,81 +94,59 @@ export default function Resources() {
     {
       question: "Are there any costs involved in being a PCO?",
       answer:
-        "There's no filing fee to run for PCO. The main costs might be minimal campaign materials if you choose to campaign actively. Many PCOs spend less than $50 total, and some spend nothing at all.",
+        "Being a PCO is a volunteer position, so there are no fees to run or serve. Some PCOs choose to spend a small amount on campaign materials like flyers, but this is not required. Many local parties offer resources to help with these costs.",
     },
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-wa-green-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Skip Navigation */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-wa-green-700 text-white px-4 py-2 rounded-md z-50"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-wa-green-700 text-white dark:bg-wa-gold-400 dark:text-wa-green-900 px-4 py-2 rounded-md z-50"
       >
         Skip to main content
       </a>
+
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+      <header className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-wa-green-100 dark:border-wa-green-800/50 shadow-sm sticky top-0 z-20" role="banner">
+        <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center text-gray-700 hover:text-gray-900 transition-colors">
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Home
+            <Link
+              href="/"
+              className="flex items-center text-wa-green-700 dark:text-wa-green-300 hover:text-wa-green-900 dark:hover:text-wa-gold-300 transition-colors duration-200 group focus:outline-none focus:ring-2 focus:ring-wa-green-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 rounded-md px-2 py-1"
+            >
+              <ArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />
+              <span className="font-medium">Back to Home</span>
             </Link>
-            <h1 className="text-2xl font-bold text-gray-900">Resources</h1>
+            <h1 className="text-2xl font-bold text-wa-green-900 dark:text-wa-gold-300">Resources & FAQ</h1>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-12">
-        {/* Introduction */}
-        <section className="text-center mb-16 bg-[url('/mountain.svg')] bg-cover bg-center py-24">
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">Resources & Support</h2>
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto mb-8">
-            Everything you need to understand PCOs, get involved, and make a difference in your community. From videos
-            to documents to answers to common questions.
-          </p>
-        </section>
-
+      <main id="main-content" className="container mx-auto px-4 py-12">
         {/* Video Resources */}
-        <section className="mb-16" aria-labelledby="videos-heading">
-          <h2 id="videos-heading" className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Educational Videos
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8" role="list">
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold text-wa-green-900 dark:text-wa-gold-300 mb-8 text-center">Video Resources</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {videoResources.map((video, index) => (
-              <Card
-                key={index}
-                className="bg-white shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-200 focus-within:ring-2 focus-within:ring-wa-green-500"
-                role="listitem"
-              >
-                <CardContent className="p-0">
-                  <div className="relative">
-                    <img
-                      src={video.thumbnail || "/placeholder.svg"}
-                      alt={`Thumbnail for ${video.title}`}
-                      className="w-full h-48 object-cover rounded-t-lg"
-                    />
-                    <button
-                      className="absolute inset-0 bg-black/40 flex items-center justify-center hover:bg-black/60 transition-colors duration-200 rounded-t-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black/40"
-                      aria-label={`Play video: ${video.title}`}
-                    >
-                      <Play
-                        className="h-12 w-12 text-white hover:scale-110 transition-transform duration-200"
-                        aria-hidden="true"
-                      />
-                    </button>
-                    <div
-                      className="absolute bottom-2 right-2 bg-black/80 text-white px-2 py-1 rounded text-sm"
-                      aria-label={`Duration: ${video.duration}`}
-                    >
-                      {video.duration}
-                    </div>
+              <Card key={index} className="bg-white dark:bg-slate-800 shadow-md border border-wa-green-100 dark:border-wa-green-800 overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <div className="relative">
+                  <img
+                    src={video.thumbnail}
+                    alt={`Thumbnail for ${video.title}`}
+                    className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Play className="h-16 w-16 text-white" />
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{video.title}</h3>
-                    <p className="text-gray-700 text-sm">{video.description}</p>
-                  </div>
+                  <span className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                    {video.duration}
+                  </span>
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-semibold text-wa-green-900 dark:text-wa-gold-300 mb-2">{video.title}</h3>
+                  <p className="text-wa-green-700 dark:text-wa-green-200 text-sm">{video.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -176,41 +154,19 @@ export default function Resources() {
         </section>
 
         {/* Document Resources */}
-        <section className="mb-16" aria-labelledby="documents-heading">
-          <h2 id="documents-heading" className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Documents & Guides
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto" role="list">
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold text-wa-green-900 dark:text-wa-gold-300 mb-8 text-center">Documents & Downloads</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {documentResources.map((doc, index) => (
-              <Card
-                key={index}
-                className="bg-white shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-200 focus-within:ring-2 focus-within:ring-wa-green-500"
-                role="listitem"
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-start">
-                    <FileText className="h-10 w-10 text-wa-green-500 mr-4 flex-shrink-0" aria-hidden="true" />
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{doc.title}</h3>
-                      <p className="text-gray-700 text-sm mb-3">{doc.description}</p>
-                      <div className="flex items-center justify-between">
-                        <span
-                          className="text-gray-600 text-sm"
-                          aria-label={`File type: ${doc.type}, Size: ${doc.size}`}
-                        >
-                          {doc.type} • {doc.size}
-                        </span>
-                        <Button
-                          size="sm"
-                          className="bg-wa-green-500 text-white hover:bg-wa-green-600 focus:outline-none focus:ring-2 focus:ring-wa-green-500 focus:ring-offset-2"
-                          aria-label={`Download ${doc.title}`}
-                        >
-                          <Download className="h-4 w-4 mr-1" aria-hidden="true" />
-                          Download
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
+              <Card key={index} className="bg-white dark:bg-slate-800 shadow-md border border-wa-green-100 dark:border-wa-green-800 text-center group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <CardContent className="p-8 flex flex-col items-center justify-center h-full">
+                  <FileText className="h-16 w-16 text-wa-green-500 dark:text-wa-green-400 mb-4 transition-transform duration-300 group-hover:scale-110" />
+                  <h3 className="text-lg font-semibold text-wa-green-900 dark:text-wa-gold-300 mb-2 flex-grow">{doc.title}</h3>
+                  <p className="text-wa-green-700 dark:text-wa-green-200 text-sm mb-4">{doc.description}</p>
+                  <Button className="bg-wa-green-600 text-white hover:bg-wa-green-700 dark:bg-wa-green-700 dark:hover:bg-wa-green-600 w-full mt-auto">
+                    <Download className="mr-2 h-4 w-4" />
+                    {doc.type} ({doc.size})
+                  </Button>
                 </CardContent>
               </Card>
             ))}
@@ -218,22 +174,17 @@ export default function Resources() {
         </section>
 
         {/* FAQ Section */}
-        <section id="faq" className="mb-16" aria-labelledby="faq-heading">
-          <h2 id="faq-heading" className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Frequently Asked Questions
-          </h2>
-          <Card className="bg-white shadow-md border border-gray-200 max-w-4xl mx-auto">
-            <CardContent className="p-8">
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold text-wa-green-900 dark:text-wa-gold-300 mb-8 text-center">Frequently Asked Questions</h2>
+          <Card className="bg-white dark:bg-slate-800 shadow-md border border-wa-green-100 dark:border-wa-green-800 max-w-4xl mx-auto">
+            <CardContent className="p-6">
               <Accordion type="single" collapsible className="w-full">
                 {faqItems.map((item, index) => (
-                  <AccordionItem key={index} value={`item-${index}`} className="border-b border-gray-200">
-                    <AccordionTrigger
-                      className="text-gray-900 hover:text-wa-green-500 text-left py-3 font-medium focus:outline-none focus:ring-2 focus:ring-wa-green-500 focus:ring-offset-2 rounded-md"
-                      aria-expanded={false}
-                    >
+                  <AccordionItem key={index} value={`item-${index}`} className="border-b-wa-green-100 dark:border-b-wa-green-700/50">
+                    <AccordionTrigger className="text-lg font-semibold text-wa-green-800 dark:text-wa-green-200 hover:text-wa-green-600 dark:hover:text-wa-gold-300 text-left">
                       {item.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-gray-700 py-3" role="region">
+                    <AccordionContent className="text-wa-green-700 dark:text-wa-green-300 text-base leading-relaxed pt-2">
                       {item.answer}
                     </AccordionContent>
                   </AccordionItem>
@@ -243,19 +194,19 @@ export default function Resources() {
           </Card>
         </section>
 
-        {/* External Resources */}
+        {/* External Links */}
         <section className="mb-16">
-          <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">Official Resources</h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="bg-white shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-200">
+          <h2 className="text-3xl font-bold text-wa-green-900 dark:text-wa-gold-300 mb-8 text-center">Official External Links</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card className="bg-white dark:bg-slate-800 shadow-md border border-wa-green-100 dark:border-wa-green-800 hover:shadow-lg transition-shadow duration-200">
               <CardContent className="p-8 text-center">
-                <Video className="h-16 w-16 text-wa-green-500 mx-auto mb-4" />
-                <h4 className="text-xl font-semibold text-gray-900 mb-4">WA Secretary of State</h4>
-                <p className="text-gray-700 mb-6">
+                <FileText className="h-16 w-16 text-wa-green-500 dark:text-wa-green-400 mx-auto mb-4" />
+                <h4 className="text-xl font-semibold text-wa-green-900 dark:text-wa-gold-300 mb-4">WA Secretary of State</h4>
+                <p className="text-wa-green-700 dark:text-wa-green-200 mb-6">
                   Official election information, candidate filing, and voter resources.
                 </p>
                 <a href="https://www.sos.wa.gov/elections/" target="_blank" rel="noopener noreferrer" className="group">
-                  <Button className="bg-wa-green-500 text-white hover:bg-wa-green-600">
+                  <Button className="bg-wa-green-600 text-white hover:bg-wa-green-700 dark:bg-wa-green-700 dark:hover:bg-wa-green-600">
                     Visit SOS <ExternalLink className="ml-2 h-4 w-4" />
                   </Button>
                   <span className="sr-only">Opens in new tab</span>
@@ -263,15 +214,15 @@ export default function Resources() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-200">
+            <Card className="bg-white dark:bg-slate-800 shadow-md border border-wa-green-100 dark:border-wa-green-800 hover:shadow-lg transition-shadow duration-200">
               <CardContent className="p-8 text-center">
-                <FileText className="h-16 w-16 text-blue-500 mx-auto mb-4" />
-                <h4 className="text-xl font-semibold text-gray-900 mb-4">WA State Democrats</h4>
-                <p className="text-gray-700 mb-6">
+                <FileText className="h-16 w-16 text-blue-500 dark:text-blue-400 mx-auto mb-4" />
+                <h4 className="text-xl font-semibold text-blue-800 dark:text-blue-300 mb-4">WA State Democrats</h4>
+                <p className="text-wa-green-700 dark:text-wa-green-200 mb-6">
                   Democratic party resources, training materials, and local contacts.
                 </p>
                 <a href="https://www.wa-democrats.org" target="_blank" rel="noopener noreferrer" className="group">
-                  <Button className="bg-blue-500 hover:bg-blue-600 text-white">
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                     Visit Democrats <ExternalLink className="ml-2 h-4 w-4" />
                   </Button>
                   <span className="sr-only">Opens in new tab</span>
@@ -279,15 +230,15 @@ export default function Resources() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-200">
+            <Card className="bg-white dark:bg-slate-800 shadow-md border border-wa-green-100 dark:border-wa-green-800 hover:shadow-lg transition-shadow duration-200">
               <CardContent className="p-8 text-center">
-                <FileText className="h-16 w-16 text-red-500 mx-auto mb-4" />
-                <h4 className="text-xl font-semibold text-gray-900 mb-4">WA State Republicans</h4>
-                <p className="text-gray-700 mb-6">
+                <FileText className="h-16 w-16 text-red-500 dark:text-red-400 mx-auto mb-4" />
+                <h4 className="text-xl font-semibold text-red-800 dark:text-red-300 mb-4">WA State Republicans</h4>
+                <p className="text-wa-green-700 dark:text-wa-green-200 mb-6">
                   Republican party resources, training programs, and county contacts.
                 </p>
                 <a href="https://www.wsrp.org" target="_blank" rel="noopener noreferrer" className="group">
-                  <Button className="bg-red-500 hover:bg-red-600 text-white">
+                  <Button className="bg-red-600 hover:bg-red-700 text-white">
                     Visit Republicans <ExternalLink className="ml-2 h-4 w-4" />
                   </Button>
                   <span className="sr-only">Opens in new tab</span>
@@ -299,16 +250,16 @@ export default function Resources() {
 
         {/* Call to Action */}
         <section className="text-center">
-          <Card className="bg-white shadow-md border border-gray-200 max-w-2xl mx-auto">
+          <Card className="bg-white dark:bg-slate-800 shadow-xl border border-wa-gold-200 dark:border-wa-gold-700/50 max-w-2xl mx-auto">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Still Have Questions?</h3>
-              <p className="text-gray-700 mb-6">
+              <h3 className="text-2xl font-bold text-wa-green-900 dark:text-wa-gold-300 mb-4">Still Have Questions?</h3>
+              <p className="text-wa-green-700 dark:text-wa-green-200 mb-6">
                 The best way to learn more is to get involved! Attend a local party meeting, talk to current PCOs, and
                 see democracy in action.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/find-precinct" target="_blank" className="group">
-                  <Button className="bg-wa-green-500 text-white hover:bg-wa-green-600">
+                  <Button className="bg-wa-green-600 text-white hover:bg-wa-green-700 dark:bg-wa-green-700 dark:hover:bg-wa-green-600">
                     Find Your Precinct <ExternalLink className="ml-2 h-4 w-4" />
                   </Button>
                   <span className="sr-only">Opens in new tab</span>
@@ -316,7 +267,7 @@ export default function Resources() {
                 <Link href="/become-pco" target="_blank" className="group">
                   <Button
                     variant="outline"
-                    className="border-wa-green-500 text-wa-green-500 hover:bg-wa-green-500 hover:text-white bg-transparent"
+                    className="border-wa-gold-500 text-wa-gold-700 dark:text-wa-gold-300 hover:bg-wa-gold-500 dark:hover:bg-wa-gold-500 hover:text-white dark:hover:text-wa-green-900 bg-transparent"
                   >
                     Start Your Journey <ExternalLink className="ml-2 h-4 w-4" />
                   </Button>
@@ -326,7 +277,7 @@ export default function Resources() {
             </CardContent>
           </Card>
         </section>
-      </div>
+      </main>
     </div>
   )
 }

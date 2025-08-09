@@ -89,38 +89,38 @@ export default function BecomePCO() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-slate-50 via-white to-wa-green-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Skip Navigation */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-wa-green-700 text-white px-4 py-2 rounded-md z-50"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-wa-green-700 text-white dark:bg-wa-gold-400 dark:text-wa-green-900 px-4 py-2 rounded-md z-50"
       >
         Skip to main content
       </a>
       {/* Header */}
-      <header className="bg-white/95 backdrop-blur-sm border-b border-wa-green-100 shadow-sm">
+      <header className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-wa-green-100 dark:border-wa-green-800/50 shadow-sm sticky top-0 z-20">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <Link
               href="/"
-              className="flex items-center text-wa-green-700 hover:text-wa-green-900 transition-colors duration-200 group"
+              className="flex items-center text-wa-green-700 dark:text-wa-green-300 hover:text-wa-green-900 dark:hover:text-wa-gold-300 transition-colors duration-200 group focus:outline-none focus:ring-2 focus:ring-wa-green-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 rounded-md px-2 py-1"
             >
               <ArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />
               <span className="font-medium">Back to Home</span>
             </Link>
-            <h1 className="text-2xl font-bold text-wa-green-900">Become a PCO</h1>
+            <h1 className="text-2xl font-bold text-wa-green-900 dark:text-wa-gold-300">Become a PCO</h1>
           </div>
         </div>
       </header>
 
-      <div className="container py-16 max-w-6xl mx-auto" id="main-content">
+      <main className="container py-16 max-w-6xl mx-auto" id="main-content">
         {/* Introduction */}
-        <section className="text-center mb-20 bg-mountain-pattern">
+        <section className="text-center mb-20">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-wa-green-900 mb-8 leading-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-wa-green-900 dark:text-wa-gold-300 mb-8 leading-tight">
               Your Path to Becoming a PCO
             </h2>
-            <p className="text-xl lg:text-2xl text-wa-green-700 leading-relaxed">
+            <p className="text-xl lg:text-2xl text-wa-green-700 dark:text-wa-green-200 leading-relaxed">
               Follow this interactive guide to understand the requirements and process for becoming a Precinct Committee
               Officer in Washington State.
             </p>
@@ -129,159 +129,136 @@ export default function BecomePCO() {
 
         {/* Interactive Flowchart */}
         <section className="mb-16" aria-labelledby="eligibility-heading">
-          <Card className="bg-white border-wa-green-100 shadow-lg hover:shadow-xl transition-all duration-300 max-w-4xl mx-auto">
-            <CardHeader>
-              <CardTitle id="eligibility-heading" className="text-3xl text-wa-green-900 text-center">
-                Eligibility Check
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-8">
-              <form role="form" aria-labelledby="eligibility-heading">
-                {flowchartSteps.map((step, index) => (
-                  <fieldset
-                    key={step.id}
-                    className={`mb-8 ${currentStep < step.id ? "opacity-50" : ""}`}
-                    disabled={currentStep < step.id}
-                  >
-                    <legend className="flex items-center mb-4">
-                      <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center mr-4 ${
-                          currentStep >= step.id ? "bg-wa-gold text-wa-green" : "bg-gray-600 text-white"
-                        }`}
-                        aria-hidden="true"
-                      >
-                        {step.id}
+          <div className="max-w-2xl mx-auto">
+            <h3 id="eligibility-heading" className="text-3xl font-bold text-center text-wa-green-900 dark:text-wa-gold-300 mb-12">
+              Check Your Eligibility
+            </h3>
+            <Card className="bg-white dark:bg-slate-800/80 border-wa-green-100 dark:border-wa-green-700/50 shadow-lg">
+              <CardContent className="p-8">
+                {flowchartSteps.map(
+                  (step, index) =>
+                    currentStep >= step.id && (
+                      <div key={step.id} className={`mb-8 ${currentStep > step.id ? "opacity-50 dark:opacity-40" : ""}`}>
+                        <h4 className="text-xl font-semibold text-wa-green-900 dark:text-wa-gold-300 mb-4">{step.title}</h4>
+                        <p className="text-wa-green-700 dark:text-wa-green-200 mb-4">{step.question}</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {step.options.map(option => (
+                            <Button
+                              key={option.value}
+                              variant={step.value === option.value ? "default" : "outline"}
+                              onClick={() => {
+                                step.setValue(option.value)
+                                if (currentStep === step.id) {
+                                  nextStep()
+                                }
+                              }}
+                              className={`w-full h-auto py-4 px-6 text-left justify-start items-center transition-all duration-200 ${step.value === option.value ? "bg-wa-green-600 text-white dark:bg-wa-gold-500 dark:text-wa-green-950 ring-2 ring-wa-green-600 dark:ring-wa-gold-400" : "bg-wa-green-50 text-wa-green-800 hover:bg-wa-green-100 dark:bg-slate-700 dark:text-wa-green-200 dark:hover:bg-slate-600 dark:border-slate-600"}`}>
+                              <option.icon className={`h-6 w-6 mr-3 ${option.color}`} />
+                              <span className="flex-1">{option.label}</span>
+                            </Button>
+                          ))}
+                        </div>
                       </div>
-                      <h3 className="text-xl font-semibold text-wa-green-900">{step.title}</h3>
-                    </legend>
+                    )
+                )}
 
-                    <div className="ml-12">
-                      <p className="text-wa-green-700 mb-4">{step.question}</p>
-                      <div className="grid gap-3" role="radiogroup" aria-labelledby={`step-${step.id}-title`}>
-                        {step.options.map((option) => (
-                          <button
-                            key={option.value}
-                            type="button"
-                            role="radio"
-                            aria-checked={step.value === option.value}
-                            onClick={() => {
-                              step.setValue(option.value)
-                              if (currentStep === step.id) {
-                                setTimeout(nextStep, 500)
-                              }
-                            }}
-                            className={`flex items-center p-4 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-wa-green-500 focus:ring-offset-2 ${
-                              step.value === option.value
-                                ? "bg-wa-gold/20 border-wa-gold text-wa-green-900"
-                                : "bg-white/5 border-white/20 text-wa-green-700 hover:bg-white/10"
-                            }`}
-                            disabled={currentStep < step.id}
-                            aria-describedby={step.value === option.value ? `${option.value}-description` : undefined}
-                          >
-                            <option.icon
-                              className={`h-5 w-5 mr-3 ${step.value === option.value ? option.color : "text-gray-400"}`}
-                              aria-hidden="true"
-                            />
-                            {option.label}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </fieldset>
-                ))}
-              </form>
-
-              {/* Results */}
-              {age && registered && (
-                <div className="mt-8 p-6 rounded-lg border-2 border-wa-gold/50" role="alert" aria-live="polite">
-                  {isEligible ? (
-                    <div className="text-center">
-                      <CheckCircle className="h-16 w-16 text-green-400 mx-auto mb-4" aria-hidden="true" />
-                      <h3 className="text-2xl font-bold text-wa-green-900 mb-4">
-                        Great! You're Eligible to Become a PCO
-                      </h3>
-                      <p className="text-wa-green-700 mb-6">
-                        You meet the basic requirements. Now let's help you find your county information.
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="text-center">
-                      <XCircle className="h-16 w-16 text-red-400 mx-auto mb-4" aria-hidden="true" />
-                      <h3 className="text-2xl font-bold text-wa-green-900 mb-4">
-                        {age === "under18" ? "Not Yet Eligible" : "Registration Required"}
-                      </h3>
-                      <p className="text-wa-green-700 mb-6">
-                        {age === "under18"
-                          ? "You must be 18 or older to serve as a PCO. Keep this in mind for the future!"
-                          : "You need to register to vote in Washington State first."}
-                      </p>
-                      {registered === "no" && (
-                        <a href="https://voter.votewa.gov/WhereToVote.aspx" target="_blank" rel="noopener noreferrer">
-                          <Button className="bg-wa-gold text-wa-green hover:bg-wa-gold/90">
-                            Register to Vote <ExternalLink className="ml-2 h-4 w-4" />
-                          </Button>
-                        </a>
-                      )}
-                    </div>
-                  )}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </section>
-
-        {/* County Selector */}
-        {isEligible && (
-          <section className="mb-16" aria-labelledby="county-heading">
-            <Card className="bg-white border-wa-green-100 shadow-lg hover:shadow-xl transition-all duration-300 max-w-2xl mx-auto">
-              <CardHeader>
-                <CardTitle id="county-heading" className="text-2xl text-wa-green-900 text-center">
-                  Select Your County
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-6">
-                <label htmlFor="county-select" className="sr-only">
-                  Choose your county
-                </label>
-                <Select value={county} onValueChange={setCounty}>
-                  <SelectTrigger
-                    id="county-select"
-                    className="w-full bg-white/10 border-wa-gold/30 text-wa-green-900 focus:ring-2 focus:ring-wa-green-500"
-                  >
-                    <SelectValue placeholder="Choose your county" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {counties.map((countyName) => (
-                      <SelectItem key={countyName} value={countyName}>
-                        {countyName} County
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                {county && (
-                  <div className="mt-6 p-4 bg-wa-gold/10 rounded-lg">
-                    <h4 className="text-lg font-semibold text-wa-green-900 mb-2">Next Steps for {county} County:</h4>
-                    <ul className="text-wa-green-700 space-y-2">
-                      <li>• Contact your county party organization</li>
-                      <li>• Check for current PCO vacancies in your precinct</li>
-                      <li>• Attend a local party meeting</li>
-                      <li>• File your candidacy during the filing period</li>
-                    </ul>
+                {age && registered && (
+                  <div className="mt-8 pt-8 border-t border-wa-green-100 dark:border-wa-green-700/50">
+                    {isEligible ? (
+                      <Card className="bg-green-50 dark:bg-green-900/50 border-2 border-green-200 dark:border-green-700">
+                        <CardContent className="p-6">
+                          <div className="flex items-center">
+                            <CheckCircle className="h-10 w-10 text-green-500 dark:text-green-400 mr-4" />
+                            <div>
+                              <h4 className="text-xl font-bold text-green-800 dark:text-green-300">Congratulations! You're eligible.</h4>
+                              <p className="text-green-700 dark:text-green-300">
+                                You meet the basic requirements to become a PCO. See the timeline below.
+                              </p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ) : (
+                      <Card className="bg-red-50 dark:bg-red-900/50 border-2 border-red-200 dark:border-red-700">
+                        <CardContent className="p-6">
+                          <div className="flex items-center">
+                            <XCircle className="h-10 w-10 text-red-500 dark:text-red-400 mr-4" />
+                            <div>
+                              <h4 className="text-xl font-bold text-red-800 dark:text-red-300">You may not be eligible yet.</h4>
+                              <p className="text-red-700 dark:text-red-300">
+                                {age === "under18"
+                                  ? "You must be 18 or older to be a PCO. You can still volunteer!"
+                                  : "You must be a registered voter to be a PCO. You can register online."}
+                              </p>
+                              {registered === "no" && (
+                                <a
+                                  href="https://www.sos.wa.gov/elections/register.aspx"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <Button className="mt-4 bg-red-500 text-white hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-500">
+                                    Register to Vote <ExternalLink className="ml-2 h-4 w-4" />
+                                  </Button>
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    )}
                   </div>
                 )}
               </CardContent>
             </Card>
-          </section>
-        )}
+          </div>
+        </section>
 
-        {/* Process Timeline */}
-        <section className="mb-16" aria-labelledby="timeline-heading">
-          <h2 id="timeline-heading" className="text-3xl font-bold text-center text-wa-green-900 mb-12">
-            The PCO Process Timeline
-          </h2>
+        {/* Filing Information Section */}
+        <section className={`mb-16 transition-opacity duration-500 ${isEligible ? "opacity-100" : "opacity-50 dark:opacity-40"}`}>
           <div className="max-w-4xl mx-auto">
-            <ol className="space-y-6" role="list">
+            <h3 className="text-3xl font-bold text-center text-wa-green-900 dark:text-wa-gold-300 mb-12">Filing for Office</h3>
+            <Card className="bg-white dark:bg-slate-800/80 border-wa-green-100 dark:border-wa-green-700/50 shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-2xl text-wa-green-900 dark:text-wa-gold-300">Select Your County</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-wa-green-700 dark:text-wa-green-200 mb-6">
+                  Each county has its own elections office where you'll file your candidacy. Select your county to find
+                  the official website.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 items-center">
+                  <Select onValueChange={setCounty} disabled={!isEligible}>
+                    <SelectTrigger className="w-full sm:w-[280px] bg-white dark:bg-slate-700 border-wa-green-200 dark:border-slate-600 dark:text-white">
+                      <SelectValue placeholder="Choose your county..." />
+                    </SelectTrigger>
+                    <SelectContent className="dark:bg-slate-800 dark:border-slate-700">
+                      {counties.map(c => (
+                        <SelectItem key={c} value={c.toLowerCase().replace(" ", "-")} className="dark:text-white dark:focus:bg-slate-700">
+                          {c}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Button disabled={!isEligible || !county} className="bg-wa-gold-500 text-wa-green-950 hover:bg-wa-gold-600 dark:bg-wa-gold-500 dark:text-wa-green-950 dark:hover:bg-wa-gold-400">
+                    Go to County Site <ExternalLink className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Timeline Section */}
+        <section className="mb-16" aria-labelledby="timeline-heading">
+          <div className="max-w-4xl mx-auto">
+            <h3 id="timeline-heading" className="text-3xl font-bold text-center text-wa-green-900 dark:text-wa-gold-300 mb-12">
+              General Timeline
+            </h3>
+            <ol className="space-y-8 relative" role="list">
+              <div
+                className="absolute left-6 top-6 bottom-6 w-0.5 bg-wa-green-200 dark:bg-wa-green-700/50"
+                aria-hidden="true"
+              ></div>
               {[
                 {
                   step: "1",
@@ -315,19 +292,19 @@ export default function BecomePCO() {
                   timing: "December",
                 },
               ].map((item, index) => (
-                <li key={index} role="listitem">
-                  <Card className="bg-white border-wa-green-100 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:ring-2 focus-within:ring-wa-green-500">
+                <li key={index} role="listitem" className="pl-12">
+                  <Card className="bg-white dark:bg-slate-800/80 border-wa-green-100 dark:border-wa-green-700/50 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:ring-2 focus-within:ring-wa-green-500 dark:focus-within:ring-wa-gold-400">
                     <CardContent className="p-6">
                       <div className="flex items-start">
-                        <div className="bg-wa-gold text-wa-green w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mr-6 flex-shrink-0">
+                        <div className="bg-wa-gold-400 text-wa-green-900 dark:bg-wa-gold-500 dark:text-wa-green-950 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mr-6 flex-shrink-0 absolute -left-6">
                           {item.step}
                         </div>
                         <div className="flex-1">
                           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                            <h4 className="text-xl font-semibold text-wa-green-900">{item.title}</h4>
-                            <span className="text-wa-gold font-medium">{item.timing}</span>
+                            <h4 className="text-xl font-semibold text-wa-green-900 dark:text-wa-gold-300">{item.title}</h4>
+                            <span className="text-wa-gold-600 dark:text-wa-gold-400 font-medium">{item.timing}</span>
                           </div>
-                          <p className="text-wa-green-700">{item.description}</p>
+                          <p className="text-wa-green-700 dark:text-wa-green-200">{item.description}</p>
                         </div>
                       </div>
                     </CardContent>
@@ -340,23 +317,23 @@ export default function BecomePCO() {
 
         {/* Call to Action */}
         <section className="text-center">
-          <Card className="bg-white border-wa-green-100 shadow-lg hover:shadow-xl transition-all duration-300 max-w-2xl mx-auto">
+          <Card className="bg-white dark:bg-slate-800/80 border-wa-green-100 dark:border-wa-gold-700/50 shadow-lg hover:shadow-xl transition-all duration-300 max-w-2xl mx-auto">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-wa-green-900 mb-4">Ready to Take the Next Step?</h3>
-              <p className="text-wa-green-700 mb-6">
+              <h3 className="text-2xl font-bold text-wa-green-900 dark:text-wa-gold-300 mb-4">Ready to Take the Next Step?</h3>
+              <p className="text-wa-green-700 dark:text-wa-green-200 mb-6">
                 Find your precinct and see if there are current PCO vacancies in your area. You might be able to get
                 appointed before the next election!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/find-precinct" target="_blank">
-                  <Button className="bg-wa-gold text-wa-green hover:bg-wa-gold/90">
+                  <Button className="bg-wa-gold-500 text-wa-green-950 hover:bg-wa-gold-600 dark:hover:bg-wa-gold-400">
                     Find Your Precinct <ExternalLink className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
                 <Link href="/resources" target="_blank">
                   <Button
                     variant="outline"
-                    className="border-wa-gold text-wa-gold hover:bg-wa-gold hover:text-wa-green bg-transparent"
+                    className="border-wa-gold-500 text-wa-gold-700 dark:text-wa-gold-300 hover:bg-wa-gold-500 dark:hover:bg-wa-gold-500 hover:text-white dark:hover:text-wa-green-900 bg-transparent"
                   >
                     Get Resources <ExternalLink className="ml-2 h-4 w-4" />
                   </Button>
@@ -365,7 +342,7 @@ export default function BecomePCO() {
             </CardContent>
           </Card>
         </section>
-      </div>
+      </main>
     </div>
   )
 }
