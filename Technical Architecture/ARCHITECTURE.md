@@ -37,6 +37,9 @@ graph TD
   P --> V
 ```
 
+Rendered image (4K PNG):
+![System Context](./System_Context.png)
+
 ### 3) Platform Decisions
 - **Framework**: Next.js 15 (App Router), Node 18+ runtime.
 - **Language**: TypeScript.
@@ -101,6 +104,9 @@ sequenceDiagram
   end
 ```
 
+Rendered image (4K PNG):
+![Request Sequence](./Request_Sequence.png)
+
 ### 6) Client Components and Data Flow
 - **County Directory (`app/find-precinct/CountyPCOPanel.tsx`)**
   - Loads `GET /api/counties` on mount, then fetches `GET /api/counties/{county}` on selection.
@@ -140,6 +146,9 @@ graph LR
   C --> U1
   D --> U1
 ```
+
+Rendered image (4K PNG):
+![Dependencies](./Dependencies.png)
 
 ### 7) Integrations
 - **U.S. Census Geocoder**: used by `/api/geocode` to map an address to a county. No API key required. Add rate limiting and basic retry/caching on server if traffic grows.
