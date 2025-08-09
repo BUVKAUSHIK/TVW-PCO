@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, ExternalLink } from "lucide-react"
+import { DarkModeToggle } from "@/components/dark-mode-toggle"
 
 export default function PartyPlatforms() {
   const platformComparison = [
@@ -51,6 +52,7 @@ export default function PartyPlatforms() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-wa-green-50 dark:from-slate-900 dark:via-slate-800 dark:to-wa-green-900">
+      <DarkModeToggle />
       {/* Skip Navigation */}
       <a
         href="#main-content"
@@ -60,7 +62,7 @@ export default function PartyPlatforms() {
       </a>
 
       {/* Header */}
-      <header className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-wa-green-100 dark:border-wa-green-800/50 shadow-sm sticky top-0 z-20" role="banner">
+      <header className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm sticky top-0 z-20" role="banner">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <Link
@@ -70,7 +72,7 @@ export default function PartyPlatforms() {
               <ArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />
               <span className="font-medium">Back to Home</span>
             </Link>
-            <h1 className="text-2xl font-bold text-wa-green-900 dark:text-wa-gold-300">Party Platforms</h1>
+            <h1 className="text-2xl font-bold text-wa-green-900 dark:text-wa-gold-300 mr-16">Party Platforms</h1>
           </div>
         </div>
       </header>

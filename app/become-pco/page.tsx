@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ArrowLeft, CheckCircle, XCircle, ExternalLink } from "lucide-react"
+import { DarkModeToggle } from "@/components/dark-mode-toggle"
 
 export default function BecomePCO() {
   const [age, setAge] = useState("")
@@ -90,6 +91,7 @@ export default function BecomePCO() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+      <DarkModeToggle />
       {/* Skip Navigation */}
       <a
         href="#main-content"
@@ -98,7 +100,7 @@ export default function BecomePCO() {
         Skip to main content
       </a>
       {/* Header */}
-      <header className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-wa-green-100 dark:border-wa-green-800/50 shadow-sm sticky top-0 z-20">
+      <header className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm sticky top-0 z-20">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <Link
@@ -108,7 +110,7 @@ export default function BecomePCO() {
               <ArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />
               <span className="font-medium">Back to Home</span>
             </Link>
-            <h1 className="text-2xl font-bold text-wa-green-900 dark:text-wa-gold-300">Become a PCO</h1>
+            <h1 className="text-2xl font-bold text-wa-green-900 dark:text-wa-gold-300 mr-16">Become a PCO</h1>
           </div>
         </div>
       </header>

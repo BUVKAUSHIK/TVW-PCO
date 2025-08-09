@@ -47,7 +47,7 @@ export function Header() {
 
   return (
     <header
-      className={`bg-white/95 dark:bg-wa-green-950/95 backdrop-blur-sm border-b border-wa-green-100 dark:border-wa-green-800 sticky top-0 z-50 shadow-sm transition-transform duration-300 ${isHidden ? '-translate-y-full' : 'translate-y-0'}`}
+      className={`sticky top-0 z-50 transition-transform duration-300 ${isHidden ? '-translate-y-full' : 'translate-y-0'}`}
       role="banner"
     >
       <nav
@@ -92,7 +92,7 @@ export function Header() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div id="mobile-menu" className="lg:hidden mt-4 pb-4 border-t border-wa-green-100 dark:border-wa-green-800" role="menu">
+          <div id="mobile-menu" className="lg:hidden mt-4 pb-4" role="menu">
             <div className="flex flex-col space-y-3 pt-4" role="none">
               <Link href="/what-is-pco" className="block text-wa-green-700 dark:text-wa-green-200 hover:bg-wa-green-50 dark:hover:bg-wa-green-800 px-3 py-2 rounded-md font-medium">What is a PCO?</Link>
               <Link href="/party-platforms" className="block text-wa-green-700 dark:text-wa-green-200 hover:bg-wa-green-50 dark:hover:bg-wa-green-800 px-3 py-2 rounded-md font-medium">Party Platforms</Link>

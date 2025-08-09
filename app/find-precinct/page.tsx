@@ -3,10 +3,12 @@ import CountyPCOPanel from "./CountyPCOPanel"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, Users, MapPin } from "lucide-react"
+import { DarkModeToggle } from "@/components/dark-mode-toggle"
 
 export default function FindPrecinctPage() {
   return (
     <>
+      <DarkModeToggle />
       <FindPrecinctClient />
       <CountyPCOPanel />
 

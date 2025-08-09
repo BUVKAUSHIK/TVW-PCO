@@ -198,8 +198,8 @@ export default function FindPrecinctClient() {
 
       <main className="container mx-auto px-4 py-6 md:py-8" id="main-content">
         {/* Introduction */}
-        <section className="text-center mb-8 md:mb-10 bg-[url('/wa-mountains.svg')] dark:bg-[url('/wa-mountains-dark.svg')] bg-cover bg-center rounded-xl p-8 md:py-16 ring-1 ring-slate-200 dark:ring-slate-800">
-          <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm p-6 rounded-lg max-w-3xl mx-auto">
+        <section className="text-center mb-8 md:mb-10 bg-gradient-to-br from-wa-green-50 to-wa-gold-50 dark:from-wa-green-950 dark:to-slate-900 rounded-xl p-8 md:py-16 ring-1 ring-slate-200 dark:ring-slate-800">
+          <div className="max-w-3xl mx-auto">
             <h2 className="text-4xl md:text-6xl font-bold text-wa-green-900 dark:text-wa-gold-300 mb-6">Locate Your Precinct</h2>
             <p className="text-xl text-slate-700 dark:text-slate-300 mx-auto">
               This tool helps you find PCOs in your county. For official voter registration and precinct information, please use the official resources below.
