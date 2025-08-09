@@ -1,0 +1,24 @@
+graph TD
+U["User Browser"] --> N["Next.js App (App Router)"]
+N --> R["React 19 + TypeScript + Tailwind UI"]
+R -->|"fetch"| A["API Routes (route.ts)"]
+A --> A1["GET /api/counties\n-> read Data_PCO/PCO_Complete_All_Counties.json"]
+A --> A2["GET /api/counties/[county]\n-> filter PCO rows"]
+A --> A3["GET /api/geocode\n-> call U.S. Census Geocoder (geographies)"]
+A --> A4["GET /api/parse-excel (optional)\n-> read Map/PCO_Contact_Final.xlsx via xlsx"]
+subgraph "Client-only"
+M["React-Leaflet Map"] --> T["OpenStreetMap Tile Server"]
+end
+A3 --> G["U.S. Census Geocoder (geographies)"]
+R --> M
+subgraph "Storage (Repo Files)"
+J["Data_PCO/PCO_Complete_All_Counties.json"]
+X["Map/PCO_Contact_Final.xlsx (optional)"]
+end
+A1 --> J
+A2 --> J
+A4 --> X
+subgraph "Platform"
+P["Next.js 15 (Node 18+)"] --> H["Vercel or self-hosted Node"]
+end
+N --> P
