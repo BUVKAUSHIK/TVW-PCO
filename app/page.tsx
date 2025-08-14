@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { WashingtonMapBackground } from "@/components/ui/washington-map-background"
 import { Header } from "@/components/header"
-import { ExternalLink, Vote, MapPin, BookOpen, HelpCircle } from 'lucide-react'
+import { ExternalLink, Vote, MapPin, BookOpen, HelpCircle, MessageCircle, Users } from 'lucide-react'
 
 export default function HomePage() {
   const [currentText, setCurrentText] = useState("")
@@ -308,6 +308,47 @@ export default function HomePage() {
                   </CardContent>
                 </Card>
               </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="py-20 bg-wa-green-50 dark:bg-wa-green-950/70" aria-labelledby="testimonials-heading">
+          <div className="container mx-auto px-4">
+            <h2 id="testimonials-heading" className="text-4xl font-bold text-center text-wa-green-900 dark:text-wa-gold-300 mb-16">
+              Why Be a PCO?
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+              {[
+                {
+                  quote: "Being a PCO is the most direct way to create change in your community. You're the bridge between your neighbors and the party.",
+                  name: "Alex Chen",
+                  role: "PCO, King County",
+                },
+                {
+                  quote: "I never thought I could be involved in politics. As an Acting PCO, I learned so much and helped get a fantastic PCO elected!",
+                  name: "Maria Garcia",
+                  role: "Former Acting PCO, Yakima County",
+                },
+                {
+                  quote: "It's incredibly rewarding. You meet amazing people and have a real say in the direction of our state. I highly recommend it.",
+                  name: "David Smith",
+                  role: "PCO, Spokane County",
+                },
+              ].map((testimonial, index) => (
+                <Card key={index} className="bg-white dark:bg-wa-green-900 border-wa-green-100 dark:border-wa-green-800 shadow-lg h-full flex flex-col">
+                  <CardContent className="p-8 flex-grow flex flex-col">
+                    <MessageCircle className="w-10 h-10 text-wa-gold-500 dark:text-wa-gold-400 mb-4" />
+                    <blockquote className="text-wa-green-700 dark:text-wa-green-200 italic text-lg flex-grow">
+                      “{testimonial.quote}”
+                    </blockquote>
+                    <footer className="mt-6">
+                      <p className="font-bold text-wa-green-900 dark:text-wa-gold-300">{testimonial.name}</p>
+                      <p className="text-sm text-wa-green-600 dark:text-wa-green-400">{testimonial.role}</p>
+                    </footer>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         </section>

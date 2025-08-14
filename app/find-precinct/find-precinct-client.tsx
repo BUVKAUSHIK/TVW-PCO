@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, ExternalLink } from "lucide-react"
+import { ExternalLink } from "lucide-react"
 import { parsePCOExcelFile } from "@/lib/parse-pco-data"
 
 interface PcoInfo {
@@ -39,8 +39,6 @@ export default function FindPrecinctClient() {
   const [allPcoData, setAllPcoData] = useState<any[]>([])
   const [allCounties, setAllCounties] = useState<string[]>([])
   const [selectedCounty, setSelectedCounty] = useState("")
-  const [headerHidden, setHeaderHidden] = useState(false)
-  const lastYRef = useState(0)[0]
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,26 +61,6 @@ export default function FindPrecinctClient() {
       }
     };
     fetchData();
-  }, [])
-
-  // Auto-hide header on scroll down, show on scroll up
-  useEffect(() => {
-    let ticking = false
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const y = window.scrollY || 0
-          const goingDown = y > (lastYRef as number)
-          // Hide when scrolling down beyond header height
-          setHeaderHidden(goingDown && y > 64)
-          ;(lastYRef as number) = y
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   const handleSearch = async (e?: React.FormEvent) => {
@@ -180,21 +158,8 @@ export default function FindPrecinctClient() {
         Skip to main content
       </a>
 
-      {/* Header (auto-hide on scroll) */}
-      <header className={`fixed top-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-slate-200/50 dark:border-slate-700/50 shadow-sm transform motion-safe:transition-transform duration-300 ${headerHidden ? '-translate-y-full' : 'translate-y-0'}`}>
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-wa-gold-300 transition-colors duration-200 group focus:outline-none focus:ring-2 focus:ring-wa-green-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 rounded-md px-2 py-1">
-              <ArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />
-              <span className="font-medium">Back to Home</span>
-            </Link>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-wa-gold-300">Find Your Precinct</h1>
-          </div>
-        </div>
-      </header>
 
-      {/* Spacer to offset fixed header height */}
-      <div className="h-16" aria-hidden="true" />
+
 
       <main className="container mx-auto px-4 py-6 md:py-8" id="main-content">
         {/* Introduction */}

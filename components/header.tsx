@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation'
 
 export function Header() {
   const pathname = usePathname()
+
   const { theme, setTheme } = useTheme()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
@@ -40,10 +41,6 @@ export function Header() {
     }
   }, [lastScrollY])
 
-  // Hide header on all pages except the home page
-  if (pathname !== '/') {
-    return null
-  }
 
   return (
     <header
@@ -68,13 +65,16 @@ export function Header() {
               <Link href="/become-pco" className="text-wa-green-700 hover:text-wa-green-900 transition-colors duration-200 font-medium dark:text-wa-green-200 dark:hover:text-wa-gold-400">Become a PCO</Link>
               <Link href="/find-precinct" className="text-wa-green-700 hover:text-wa-green-900 transition-colors duration-200 font-medium dark:text-wa-green-200 dark:hover:text-wa-gold-400">Find Your Precinct</Link>
               <Link href="/resources" className="text-wa-green-700 hover:text-wa-green-900 transition-colors duration-200 font-medium dark:text-wa-green-200 dark:hover:text-wa-gold-400">Resources</Link>
-              <button
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="p-2 rounded-full text-wa-green-700 dark:text-wa-green-200 hover:bg-wa-green-100 dark:hover:bg-wa-green-800 transition-colors"
-                aria-label="Toggle theme"
-              >
-                {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              </button>
+              {pathname === '/' && (
+                <button
+                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                  className="p-2 rounded-full text-wa-green-700 dark:text-wa-green-200 hover:bg-wa-green-100 dark:hover:bg-wa-green-800 transition-colors"
+                  aria-label="Toggle theme"
+                >
+                  {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                </button>
+              )}
+
             </div>
           </div>
 
