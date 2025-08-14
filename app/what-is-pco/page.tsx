@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { WashingtonMapBackground } from "@/components/ui/washington-map-background"
-import { ArrowLeft, Users, Vote, Megaphone, MapPin, ExternalLink } from 'lucide-react'
+import { Users, Vote, Megaphone, MapPin, ExternalLink } from 'lucide-react'
 import { DarkModeToggle } from "@/components/dark-mode-toggle"
 
 export default function WhatIsPCO() {
@@ -22,22 +22,7 @@ export default function WhatIsPCO() {
         Skip to main content
       </a>
 
-      {/* Header */}
-      <header className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm relative z-10" role="banner">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <Link
-              href="/"
-              className="flex items-center text-wa-green-700 dark:text-wa-green-300 hover:text-wa-green-900 dark:hover:text-wa-gold-300 transition-colors duration-200 group focus:outline-none focus:ring-2 focus:ring-wa-green-500 focus:ring-offset-2 rounded-md px-2 py-1"
-              aria-label="Go back to home page"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />
-              <span className="font-medium">Back to Home</span>
-            </Link>
-            <h1 className="text-2xl font-bold text-wa-green-900 dark:text-wa-gold-300 mr-16">What is a PCO?</h1>
-          </div>
-        </div>
-      </header>
+
 
       <main id="main-content" role="main" className="relative z-10">
         <div className="container mx-auto px-4 py-16 max-w-6xl">

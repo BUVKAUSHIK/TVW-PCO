@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { ArrowLeft, Play, FileText, ExternalLink, Video, Download } from "lucide-react"
+import { Play, FileText, ExternalLink, Video, Download } from "lucide-react"
 import { DarkModeToggle } from "@/components/dark-mode-toggle"
 
 export default function Resources() {
@@ -109,22 +109,6 @@ export default function Resources() {
       >
         Skip to main content
       </a>
-
-      {/* Header */}
-      <header className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm sticky top-0 z-20" role="banner">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <Link
-              href="/"
-              className="flex items-center text-wa-green-700 dark:text-wa-green-300 hover:text-wa-green-900 dark:hover:text-wa-gold-300 transition-colors duration-200 group focus:outline-none focus:ring-2 focus:ring-wa-green-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 rounded-md px-2 py-1"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />
-              <span className="font-medium">Back to Home</span>
-            </Link>
-            <h1 className="text-2xl font-bold text-wa-green-900 dark:text-wa-gold-300 mr-16">Resources & FAQ</h1>
-          </div>
-        </div>
-      </header>
 
       <main id="main-content" className="container mx-auto px-4 py-12">
         {/* Video Resources */}

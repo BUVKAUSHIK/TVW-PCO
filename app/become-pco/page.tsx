@@ -5,7 +5,8 @@ import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ArrowLeft, CheckCircle, XCircle, ExternalLink } from "lucide-react"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { CheckCircle, XCircle, ExternalLink } from "lucide-react"
 import { DarkModeToggle } from "@/components/dark-mode-toggle"
 
 export default function BecomePCO() {
@@ -13,6 +14,136 @@ export default function BecomePCO() {
   const [registered, setRegistered] = useState("")
   const [county, setCounty] = useState("")
   const [currentStep, setCurrentStep] = useState(1)
+  const [activeTimelineStep, setActiveTimelineStep] = useState("item-1")
+  const [quizAnswers, setQuizAnswers] = useState<{ [key: number]: string | null }>({})
+  const [currentQuizQuestion, setCurrentQuizQuestion] = useState(0)
+  const [quizScore, setQuizScore] = useState(0)
+  const [quizCompleted, setQuizCompleted] = useState(false)
+
+  const timelineSteps = [
+    {
+      step: "1",
+      title: "Research & Prepare",
+      timing: "Anytime",
+      details: [
+        "Find your precinct number and boundaries.",
+        "Attend local party meetings to network.",
+        "Learn the key issues in your community.",
+        "Connect with current PCOs for advice.",
+      ],
+    },
+    {
+      step: "2",
+      title: "Filing Period",
+      timing: "May (Election Years)",
+      details: [
+        "Official filing week is typically in May of even-numbered years.",
+        "File your candidacy with your county elections office.",
+        "There is no fee to file for PCO.",
+      ],
+    },
+    {
+      step: "3",
+      title: "Campaign (if needed)",
+      timing: "Summer",
+      details: [
+        "Many PCO positions are uncontested.",
+        "If another person files, you'll need to campaign.",
+        "Talk to your neighbors and ask for their vote.",
+      ],
+    },
+    {
+      step: "4",
+      title: "Election",
+      timing: "August (Election Years)",
+      details: [
+        "Your name will appear on the Primary Election ballot.",
+        "Only voters in your precinct can vote for you.",
+        "The winner is decided in the August Primary.",
+      ],
+    },
+    {
+      step: "5",
+      title: "Take Office",
+      timing: "December 1st",
+      details: [
+        "If you win the election, you are officially certified.",
+        "Your two-year term as a PCO begins on December 1st.",
+        "You become a voting member of your local party organization.",
+      ],
+    },
+  ]
+
+  const mythFactQuiz = [
+    {
+      id: 1,
+      statement: "You have to be 18 to be an Elected PCO.",
+      isFact: true,
+      answer: "FACT!",
+      explanation: "To be an Elected PCO, you must be a registered voter, which requires you to be 18. However, anyone can be an Acting PCO regardless of age!",
+      quote: "An elected PCO must be a registered voter in the precinct they wish to represent.",
+    },
+    {
+      id: 2,
+      statement: "You have to pay a fee to run for PCO.",
+      isFact: false,
+      answer: "MYTH!",
+      explanation: "Filing to become a PCO is free because it is an unpaid, volunteer party position.",
+      quote: "Because PCO positions are unpaid, there is no filing fee.",
+    },
+    {
+      id: 3,
+      statement: "Being a PCO takes up all your free time.",
+      isFact: false,
+      answer: "MYTH!",
+      explanation: "The time commitment is flexible. The handbook suggests a few hours a month, but you can contribute as much or as little time as you have.",
+      quote: "The PCO role is what you make of it... A PCO can be effective in as little as 4-5 hours per month.",
+    },
+    {
+      id: 4,
+      statement: "PCOs have to donate a lot of money.",
+      isFact: false,
+      answer: "MYTH!",
+      explanation: "There is no requirement to donate. A PCO's main role is to organize and connect with voters, not to be a fundraiser.",
+      quote: "There is no requirement that a PCO donate any money.",
+    },
+    {
+      id: 5,
+      statement: "You can only be an Elected PCO.",
+      isFact: false,
+      answer: "MYTH!",
+      explanation: "Besides being Elected, you can also be an Appointed PCO (if a seat is vacant) or an Acting PCO (to help organize a vacant precinct).",
+      quote: "There are three types of PCOs: Elected, Appointed, and Acting.",
+    },
+  ]
+
+  const handleQuizAnswer = (id: number, answer: string) => {
+    if (quizAnswers[id]) return // Prevent answering twice
+
+    const question = mythFactQuiz.find(q => q.id === id)
+    if (question) {
+      const isCorrect = (question.isFact && answer === "fact") || (!question.isFact && answer === "myth")
+      if (isCorrect) {
+        setQuizScore(prev => prev + 1)
+      }
+    }
+    setQuizAnswers(prev => ({ ...prev, [id]: answer }))
+  }
+
+  const handleNextQuestion = () => {
+    if (currentQuizQuestion < mythFactQuiz.length - 1) {
+      setCurrentQuizQuestion(prev => prev + 1)
+    } else {
+      setQuizCompleted(true)
+    }
+  }
+
+  const resetQuiz = () => {
+    setQuizAnswers({})
+    setCurrentQuizQuestion(0)
+    setQuizScore(0)
+    setQuizCompleted(false)
+  }
 
   const counties = [
     "Adams",
@@ -99,21 +230,7 @@ export default function BecomePCO() {
       >
         Skip to main content
       </a>
-      {/* Header */}
-      <header className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm sticky top-0 z-20">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <Link
-              href="/"
-              className="flex items-center text-wa-green-700 dark:text-wa-green-300 hover:text-wa-green-900 dark:hover:text-wa-gold-300 transition-colors duration-200 group focus:outline-none focus:ring-2 focus:ring-wa-green-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 rounded-md px-2 py-1"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />
-              <span className="font-medium">Back to Home</span>
-            </Link>
-            <h1 className="text-2xl font-bold text-wa-green-900 dark:text-wa-gold-300 mr-16">Become a PCO</h1>
-          </div>
-        </div>
-      </header>
+
 
       <main className="container py-16 max-w-6xl mx-auto" id="main-content">
         {/* Introduction */}
@@ -215,162 +332,131 @@ export default function BecomePCO() {
           </div>
         </section>
 
-        {/* Find Your Role - Branching Paths */}
-        <section className="mb-16" aria-labelledby="role-heading">
-          <div className="max-w-4xl mx-auto">
-            <h3 id="role-heading" className="text-3xl font-bold text-center text-wa-green-900 dark:text-wa-gold-300 mb-12">
-              Find Your Role
-            </h3>
-            {isEligible ? (
-              <Card className="bg-white dark:bg-slate-800/80 border-wa-green-100 dark:border-wa-green-700/50 shadow-lg">
-                <CardContent className="p-8">
-                  <h4 className="text-2xl font-semibold text-wa-green-900 dark:text-wa-gold-300 mb-3">Path A: The Elected PCO Track</h4>
-                  <p className="text-wa-green-700 dark:text-wa-green-200 mb-4">
-                    Awesome! You meet the requirements to be an <strong>Elected PCO</strong>, the most direct way to become a voting
-                    member of the party.
-                  </p>
-                  <ul className="list-disc pl-6 space-y-2 text-wa-green-700 dark:text-wa-green-200">
-                    <li><strong>What it is:</strong> An Elected PCO is voted into office by neighbors during the primary and serves a two-year term as the official representative for the precinct.</li>
-                    <li><strong>Your Power:</strong> Vote on party leadership, help endorse candidates, and participate in key party decisions.</li>
-                  </ul>
-                  <div className="mt-6">
-                    <a href="#timeline-heading">
-                      <Button className="bg-wa-gold-500 text-wa-green-950 hover:bg-wa-gold-600 dark:bg-wa-gold-500 dark:hover:bg-wa-gold-400">
-                        Jump to Timeline to Get Elected
-                      </Button>
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <Card className="bg-white dark:bg-slate-800/80 border-wa-green-100 dark:border-wa-green-700/50 shadow-lg">
-                <CardContent className="p-8">
-                  <h4 className="text-2xl font-semibold text-wa-green-900 dark:text-wa-gold-300 mb-3">Path B: The Acting PCO Track</h4>
-                  <p className="text-wa-green-700 dark:text-wa-green-200 mb-4">
-                    Great news! You can start right away as an <strong>Acting PCO</strong> — a fantastic way to gain real organizing experience.
-                  </p>
-                  <ul className="list-disc pl-6 space-y-2 text-wa-green-700 dark:text-wa-green-200">
-                    <li><strong>What it is:</strong> Appointed by local party leaders to organize a precinct without a current PCO.</li>
-                    <li><strong>Your Mission:</strong> Connect with voters and help recruit a resident to become the official PCO.</li>
-                    <li><strong>Open to Youth:</strong> You don’t need to be 18 or a registered voter to be appointed Acting PCO.</li>
-                  </ul>
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    <Link href="/resources" target="_blank">
-                      <Button variant="outline" className="border-wa-gold-500 text-wa-gold-700 dark:text-wa-gold-300 hover:bg-wa-gold-500 dark:hover:bg-wa-gold-500 hover:text-white dark:hover:text-wa-green-900 bg-transparent">
-                        How to Become an Acting PCO
-                      </Button>
-                    </Link>
-                    <Link href="/find-precinct" target="_blank">
-                      <Button className="bg-wa-green-600 text-white hover:bg-wa-green-700 dark:bg-wa-green-700 dark:hover:bg-wa-green-600">
-                        Find Vacant Precincts
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        </section>
-
-        {/* Filing Information Section */}
-        <section className={`mb-16 transition-opacity duration-500 ${isEligible ? "opacity-100" : "opacity-50 dark:opacity-40"}`}>
-          <div className="max-w-4xl mx-auto">
-            <h3 className="text-3xl font-bold text-center text-wa-green-900 dark:text-wa-gold-300 mb-12">Filing for Office</h3>
-            <Card className="bg-white dark:bg-slate-800/80 border-wa-green-100 dark:border-wa-green-700/50 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-2xl text-wa-green-900 dark:text-wa-gold-300">Select Your County</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-wa-green-700 dark:text-wa-green-200 mb-6">
-                  Each county has its own elections office where you'll file your candidacy. Select your county to find
-                  the official website.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 items-center">
-                  <Select onValueChange={setCounty} disabled={!isEligible}>
-                    <SelectTrigger className="w-full sm:w-[280px] bg-white dark:bg-slate-700 border-wa-green-200 dark:border-slate-600 dark:text-white">
-                      <SelectValue placeholder="Choose your county..." />
-                    </SelectTrigger>
-                    <SelectContent className="dark:bg-slate-800 dark:border-slate-700">
-                      {counties.map(c => (
-                        <SelectItem key={c} value={c.toLowerCase().replace(" ", "-")} className="dark:text-white dark:focus:bg-slate-700">
-                          {c}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Button disabled={!isEligible || !county} className="bg-wa-gold-500 text-wa-green-950 hover:bg-wa-gold-600 dark:bg-wa-gold-500 dark:text-wa-green-950 dark:hover:bg-wa-gold-400">
-                    Go to County Site <ExternalLink className="ml-2 h-4 w-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
         {/* Timeline Section */}
         <section className="mb-16" aria-labelledby="timeline-heading">
           <div className="max-w-4xl mx-auto">
-            <h3 id="timeline-heading" className="text-3xl font-bold text-center text-wa-green-900 dark:text-wa-gold-300 mb-12">
+            <h3
+              id="timeline-heading"
+              className="text-3xl font-bold text-center text-wa-green-900 dark:text-wa-gold-300 mb-12"
+            >
               Timeline to Get Elected!
             </h3>
-            <ol className="space-y-8 relative" role="list">
-              <div
-                className="absolute left-6 top-6 bottom-6 w-0.5 bg-wa-green-200 dark:bg-wa-green-700/50"
-                aria-hidden="true"
-              ></div>
-              {[
-                {
-                  step: "1",
-                  title: "Research & Prepare",
-                  description: "Learn about your precinct, attend party meetings, and connect with current PCOs",
-                  timing: "Anytime",
-                },
-                {
-                  step: "2",
-                  title: "Filing Period",
-                  description:
-                    "File your candidacy with the county elections office during the designated filing period",
-                  timing: "May (Election Years)",
-                },
-                {
-                  step: "3",
-                  title: "Campaign (if needed)",
-                  description: "If there's competition, campaign in your precinct. Many positions are uncontested",
-                  timing: "Summer",
-                },
-                {
-                  step: "4",
-                  title: "Election",
-                  description: "PCOs are elected during the primary election in August",
-                  timing: "August (Election Years)",
-                },
-                {
-                  step: "5",
-                  title: "Take Office",
-                  description: "Begin your two-year term as a PCO and start making a difference",
-                  timing: "December",
-                },
-              ].map((item, index) => (
-                <li key={index} role="listitem" className="pl-12">
-                  <Card className="bg-white dark:bg-slate-800/80 border-wa-green-100 dark:border-wa-green-700/50 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:ring-2 focus-within:ring-wa-green-500 dark:focus-within:ring-wa-gold-400">
-                    <CardContent className="p-6">
-                      <div className="flex items-start">
-                        <div className="bg-wa-gold-400 text-wa-green-900 dark:bg-wa-gold-500 dark:text-wa-green-950 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mr-6 flex-shrink-0 absolute -left-6">
-                          {item.step}
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                            <h4 className="text-xl font-semibold text-wa-green-900 dark:text-wa-gold-300">{item.title}</h4>
-                            <span className="text-wa-gold-600 dark:text-wa-gold-400 font-medium">{item.timing}</span>
-                          </div>
-                          <p className="text-wa-green-700 dark:text-wa-green-200">{item.description}</p>
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full space-y-4"
+              value={activeTimelineStep}
+              onValueChange={setActiveTimelineStep}
+            >
+              {timelineSteps.map((item, index) => (
+                <AccordionItem
+                  key={item.step}
+                  value={`item-${index + 1}`}
+                  className="border-2 border-wa-green-100 dark:border-wa-green-700/50 bg-white dark:bg-slate-800/80 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <AccordionTrigger className="p-6 text-left hover:no-underline">
+                    <div className="flex items-center">
+                      <div className="bg-wa-gold-400 text-wa-green-900 dark:bg-wa-gold-500 dark:text-wa-green-950 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mr-6 flex-shrink-0">
+                        {item.step}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                          <h4 className="text-xl font-semibold text-wa-green-900 dark:text-wa-gold-300">
+                            {item.title}
+                          </h4>
+                          <span className="text-sm text-wa-gold-600 dark:text-wa-gold-400 font-medium mt-1 sm:mt-0">
+                            {item.timing}
+                          </span>
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                </li>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="p-6 pt-0 pl-20">
+                    <ul className="list-disc list-inside space-y-2 text-wa-green-700 dark:text-wa-green-200">
+                      {item.details.map((detail, i) => (
+                        <li key={i}>{detail}</li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
               ))}
-            </ol>
+            </Accordion>
+          </div>
+        </section>
+
+        {/* PCO Myth vs. Fact Quiz */}
+        <section className="mb-16" aria-labelledby="myth-fact-heading">
+          <div className="max-w-4xl mx-auto">
+            <h3 id="myth-fact-heading" className="text-3xl font-bold text-center text-wa-green-900 dark:text-wa-gold-300 mb-12">
+              PCO Myth vs. Fact
+            </h3>
+            <Card className="bg-white dark:bg-slate-800/80 border-wa-green-100 dark:border-wa-green-700/50 shadow-lg overflow-hidden min-h-[350px]">
+              <CardContent className="p-8 flex flex-col justify-between h-full">
+                {!quizCompleted ? (
+                  <div>
+                    <p className="text-center text-sm font-medium text-wa-green-600 dark:text-wa-green-400 mb-2">
+                      Question {currentQuizQuestion + 1} of {mythFactQuiz.length}
+                    </p>
+                    <p className="text-xl font-semibold text-wa-green-800 dark:text-wa-green-200 mb-6 text-center min-h-[60px]">
+                      {mythFactQuiz[currentQuizQuestion].statement}
+                    </p>
+                    {!quizAnswers[mythFactQuiz[currentQuizQuestion].id] ? (
+                      <div className="flex flex-col sm:flex-row gap-4 mt-4">
+                        <Button
+                          onClick={() => handleQuizAnswer(mythFactQuiz[currentQuizQuestion].id, "fact")}
+                          className="flex-1 py-6 text-lg bg-wa-green-600 text-white hover:bg-wa-green-700"
+                        >
+                          Fact
+                        </Button>
+                        <Button
+                          onClick={() => handleQuizAnswer(mythFactQuiz[currentQuizQuestion].id, "myth")}
+                          className="flex-1 py-6 text-lg bg-wa-gold-500 text-wa-green-950 hover:bg-wa-gold-600"
+                        >
+                          Myth
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="text-center">
+                        <div
+                          className={`p-4 rounded-lg border-2 ${
+                            (mythFactQuiz[currentQuizQuestion].isFact && quizAnswers[mythFactQuiz[currentQuizQuestion].id] === "fact") ||
+                            (!mythFactQuiz[currentQuizQuestion].isFact && quizAnswers[mythFactQuiz[currentQuizQuestion].id] === "myth")
+                              ? "bg-green-50 dark:bg-green-900/50 border-green-200 dark:border-green-700"
+                              : "bg-red-50 dark:bg-red-900/50 border-red-200 dark:border-red-700"
+                          }`}
+                        >
+                          <h4
+                            className={`text-xl font-bold ${
+                              (mythFactQuiz[currentQuizQuestion].isFact && quizAnswers[mythFactQuiz[currentQuizQuestion].id] === "fact") ||
+                              (!mythFactQuiz[currentQuizQuestion].isFact && quizAnswers[mythFactQuiz[currentQuizQuestion].id] === "myth")
+                                ? "text-green-800 dark:text-green-300"
+                                : "text-red-800 dark:text-red-300"
+                            }`}
+                          >
+                            {quizAnswers[mythFactQuiz[currentQuizQuestion].id] === (mythFactQuiz[currentQuizQuestion].isFact ? "fact" : "myth") ? "Correct!" : "Incorrect."}{` `}
+                            The answer is {mythFactQuiz[currentQuizQuestion].answer}
+                          </h4>
+                          <p className="mt-2 text-wa-green-700 dark:text-wa-green-300">{mythFactQuiz[currentQuizQuestion].explanation}</p>
+                        </div>
+                        <Button onClick={handleNextQuestion} className="mt-6">
+                          {currentQuizQuestion < mythFactQuiz.length - 1 ? "Next Question" : "See Results"}
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-center flex flex-col items-center justify-center h-full">
+                    <h4 className="text-3xl font-bold text-wa-green-900 dark:text-wa-gold-300">Quiz Complete!</h4>
+                    <p className="text-xl text-wa-green-700 dark:text-wa-green-200 mt-4">
+                      You scored {quizScore} out of {mythFactQuiz.length}!
+                    </p>
+                    <Button onClick={resetQuiz} className="mt-8">
+                      Try Again
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </div>
         </section>
 
