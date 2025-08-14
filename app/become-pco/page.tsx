@@ -215,6 +215,63 @@ export default function BecomePCO() {
           </div>
         </section>
 
+        {/* Find Your Role - Branching Paths */}
+        <section className="mb-16" aria-labelledby="role-heading">
+          <div className="max-w-4xl mx-auto">
+            <h3 id="role-heading" className="text-3xl font-bold text-center text-wa-green-900 dark:text-wa-gold-300 mb-12">
+              Find Your Role
+            </h3>
+            {isEligible ? (
+              <Card className="bg-white dark:bg-slate-800/80 border-wa-green-100 dark:border-wa-green-700/50 shadow-lg">
+                <CardContent className="p-8">
+                  <h4 className="text-2xl font-semibold text-wa-green-900 dark:text-wa-gold-300 mb-3">Path A: The Elected PCO Track</h4>
+                  <p className="text-wa-green-700 dark:text-wa-green-200 mb-4">
+                    Awesome! You meet the requirements to be an <strong>Elected PCO</strong>, the most direct way to become a voting
+                    member of the party.
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2 text-wa-green-700 dark:text-wa-green-200">
+                    <li><strong>What it is:</strong> An Elected PCO is voted into office by neighbors during the primary and serves a two-year term as the official representative for the precinct.</li>
+                    <li><strong>Your Power:</strong> Vote on party leadership, help endorse candidates, and participate in key party decisions.</li>
+                  </ul>
+                  <div className="mt-6">
+                    <a href="#timeline-heading">
+                      <Button className="bg-wa-gold-500 text-wa-green-950 hover:bg-wa-gold-600 dark:bg-wa-gold-500 dark:hover:bg-wa-gold-400">
+                        Jump to Timeline to Get Elected
+                      </Button>
+                    </a>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : (
+              <Card className="bg-white dark:bg-slate-800/80 border-wa-green-100 dark:border-wa-green-700/50 shadow-lg">
+                <CardContent className="p-8">
+                  <h4 className="text-2xl font-semibold text-wa-green-900 dark:text-wa-gold-300 mb-3">Path B: The Acting PCO Track</h4>
+                  <p className="text-wa-green-700 dark:text-wa-green-200 mb-4">
+                    Great news! You can start right away as an <strong>Acting PCO</strong> — a fantastic way to gain real organizing experience.
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2 text-wa-green-700 dark:text-wa-green-200">
+                    <li><strong>What it is:</strong> Appointed by local party leaders to organize a precinct without a current PCO.</li>
+                    <li><strong>Your Mission:</strong> Connect with voters and help recruit a resident to become the official PCO.</li>
+                    <li><strong>Open to Youth:</strong> You don’t need to be 18 or a registered voter to be appointed Acting PCO.</li>
+                  </ul>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <Link href="/resources" target="_blank">
+                      <Button variant="outline" className="border-wa-gold-500 text-wa-gold-700 dark:text-wa-gold-300 hover:bg-wa-gold-500 dark:hover:bg-wa-gold-500 hover:text-white dark:hover:text-wa-green-900 bg-transparent">
+                        How to Become an Acting PCO
+                      </Button>
+                    </Link>
+                    <Link href="/find-precinct" target="_blank">
+                      <Button className="bg-wa-green-600 text-white hover:bg-wa-green-700 dark:bg-wa-green-700 dark:hover:bg-wa-green-600">
+                        Find Vacant Precincts
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        </section>
+
         {/* Filing Information Section */}
         <section className={`mb-16 transition-opacity duration-500 ${isEligible ? "opacity-100" : "opacity-50 dark:opacity-40"}`}>
           <div className="max-w-4xl mx-auto">
@@ -254,7 +311,7 @@ export default function BecomePCO() {
         <section className="mb-16" aria-labelledby="timeline-heading">
           <div className="max-w-4xl mx-auto">
             <h3 id="timeline-heading" className="text-3xl font-bold text-center text-wa-green-900 dark:text-wa-gold-300 mb-12">
-              General Timeline
+              Timeline to Get Elected!
             </h3>
             <ol className="space-y-8 relative" role="list">
               <div
@@ -290,7 +347,7 @@ export default function BecomePCO() {
                 {
                   step: "5",
                   title: "Take Office",
-                  description: "Begin your 4-year term as a PCO and start making a difference",
+                  description: "Begin your two-year term as a PCO and start making a difference",
                   timing: "December",
                 },
               ].map((item, index) => (
