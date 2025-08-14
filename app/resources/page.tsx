@@ -130,28 +130,44 @@ export default function Resources() {
         {/* Video Resources */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-wa-green-900 dark:text-wa-gold-300 mb-8 text-center">Video Resources</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {videoResources.map((video, index) => (
-              <Card key={index} className="bg-white dark:bg-slate-800 shadow-md border border-wa-green-100 dark:border-wa-green-800 overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                <div className="relative">
-                  <img
-                    src={video.thumbnail}
-                    alt={`Thumbnail for ${video.title}`}
-                    className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="bg-white dark:bg-slate-800 shadow-md border border-wa-green-100 dark:border-wa-green-800 overflow-hidden">
+              <CardContent className="p-0">
+                <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
+                  <iframe
+                    className="absolute inset-0 w-full h-full"
+                    src="https://www.youtube.com/embed/3UtOorj4RJ8"
+                    title="What is a PCO?"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
                   />
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Play className="h-16 w-16 text-white" />
-                  </div>
-                  <span className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                    {video.duration}
-                  </span>
                 </div>
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-wa-green-900 dark:text-wa-gold-300 mb-2">{video.title}</h3>
-                  <p className="text-wa-green-700 dark:text-wa-green-200 text-sm">{video.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+              </CardContent>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-wa-green-900 dark:text-wa-gold-300">What is a PCO?</h3>
+              </div>
+            </Card>
+
+            <Card className="bg-white dark:bg-slate-800 shadow-md border border-wa-green-100 dark:border-wa-green-800 overflow-hidden">
+              <CardContent className="p-0">
+                <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
+                  <iframe
+                    className="absolute inset-0 w-full h-full"
+                    src="https://www.youtube.com/embed/SNcMl8hlyow"
+                    title="How to Become a PCO"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </div>
+              </CardContent>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-wa-green-900 dark:text-wa-gold-300">How to Become a PCO</h3>
+              </div>
+            </Card>
           </div>
         </section>
 
