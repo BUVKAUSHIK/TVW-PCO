@@ -1,6 +1,6 @@
 ### Technical Architecture — TVW-PCO
 
-Version: 1.0.0 (2025-08-09)
+Version: 1.0.1 (2025-08-16)
 
 ### 1) Overview
 - **Purpose**: Public website to educate Washington State residents about PCOs, surface county-level PCO directories, and help users find precinct-related information.
@@ -13,7 +13,7 @@ Version: 1.0.0 (2025-08-09)
 ```mermaid
 graph TD
   A["User Browser"] --> B["Next.js App (App Router)"]
-  B --> C["React 19 + TypeScript + Tailwind (UI)"]
+  B --> C["React 18 + TypeScript + Tailwind (UI)"]
   C -->|"fetch"| D["API Routes (route.ts)"]
   D --> D1["GET /api/counties -> read Data_PCO/PCO_Complete_All_Counties.json"]
   D --> D2["GET /api/counties/[county] -> filter county rows"]
@@ -43,14 +43,12 @@ Rendered image (4K PNG):
 ### 3) Platform Decisions
 - **Framework**: Next.js 15 (App Router), Node 18+ runtime.
 - **Language**: TypeScript.
-- **UI**: React 19, Tailwind CSS, shadcn/ui + Radix primitives.
+- **UI**: React 18, Tailwind CSS, shadcn/ui + Radix primitives.
 - **Mapping**: React-Leaflet (client-only via dynamic imports) with OpenStreetMap tiles.
 - **Data storage**: File-based JSON within repo. Optional Excel file for authoring convenience.
 - **Hosting**: Vercel recommended; also works on self-hosted Node.
 - **Build settings** (`next.config.mjs`): ESLint and TypeScript errors ignored during builds; images unoptimized (acceptable for MVP, revisit for production).
-- **Dependencies note**: React 19 with `vaul` currently requires `--legacy-peer-deps` installation. Options:
-  - Short-term: Continue with React 19 and `--legacy-peer-deps`.
-  - Safer: Downgrade to React 18 or replace/upgrade `vaul` when React 19 compatible.
+- **Dependencies note**: React 18 with `react-leaflet@4.2.1` for compatibility. React 19 was causing peer dependency conflicts with `vaul` and `react-leaflet@5.0.0`.
 
 ### 4) Data Model
 - **PCO (canonical JSON shape)**
@@ -173,14 +171,16 @@ Rendered image (4K PNG):
 - UI follows accessible patterns (Radix primitives, keyboard navigation, contrast). Provide non-map fallbacks where relevant.
 
 ### 12) CI/CD
-- Install step may require `npm install --legacy-peer-deps` until React 19 peer issues are resolved.
+- Install step: `npm install` (React 18 compatibility resolved).
 - Lint/typecheck are currently ignored during build (per `next.config.mjs`); tighten for production.
-- Build and deploy with Vercel previews; main → production.
+- Build and deploy with Vercel previews or Netlify; main → production.
+- Netlify configuration: `netlify.toml` specifies Node 18 and build settings.
 
 ### 13) Deployment
-- Recommended: Vercel (auto-detects Next.js). Alternative: self-hosted Node.
-- Ensure `Data_PCO/PCO_Complete_All_Counties.json` is present and valid in deployments.
-- Decide whether to include `Map/PCO_Contact_Final.xlsx` in production or gate Excel-driven features.
+- **Vercel**: Recommended (auto-detects Next.js). Alternative: self-hosted Node.
+- **Netlify**: Supported with `netlify.toml` configuration. Uses Node 18 and standard npm install.
+- **Build requirements**: Ensure `Data_PCO/PCO_Complete_All_Counties.json` is present and valid in deployments.
+- **Optional features**: Decide whether to include `Map/PCO_Contact_Final.xlsx` in production or gate Excel-driven features.
 
 ### 14) Operational Notes (Observed)
 - Dev server started successfully:
@@ -190,18 +190,21 @@ Rendered image (4K PNG):
 - `GET /placeholder.svg?...` returned `404`; verify any placeholder asset usage in the UI.
 
 ### 15) Runbook
-- Install deps (current): `npm install --legacy-peer-deps`
-- Dev: `npm run dev`
-- Build: `npm run build`
-- Start: `npm run start`
+- **Install deps**: `npm install` (React 18 compatibility resolved)
+- **Dev**: `npm run dev`
+- **Build**: `npm run build`
+- **Start**: `npm run start`
+- **Netlify deploy**: Uses `netlify.toml` configuration with Node 18
 
 ### 16) Risks & Future Work
-- Dependency drift with React 19 and some UI libs (e.g., `vaul`).
-- Large JSON may impact cold starts/transfer; consider chunking or server pagination if needed.
-- Unify data sources: prefer a build-time transform from Excel/CSV → canonical JSON.
-- Add tests for API routes and data normalization; integrate a schema validator for `Data_PCO`.
+- **Resolved**: React 19 peer dependency conflicts by downgrading to React 18 with `react-leaflet@4.2.1`.
+- **Large JSON**: May impact cold starts/transfer; consider chunking or server pagination if needed.
+- **Data sources**: Unify by implementing build-time transform from Excel/CSV → canonical JSON.
+- **Testing**: Add tests for API routes and data normalization; integrate schema validator for `Data_PCO`.
+- **Future upgrade**: Monitor React 19 compatibility with UI libraries before upgrading.
 
 ### 17) Change Log
-- 1.0.0 (2025-08-09): Initial architecture document added with diagrams, platform decisions, integrations, and operational notes.
+- **1.0.1 (2025-08-16)**: Updated for React 18 compatibility, added Netlify deployment support, resolved peer dependency conflicts.
+- **1.0.0 (2025-08-09)**: Initial architecture document added with diagrams, platform decisions, integrations, and operational notes.
 
 
